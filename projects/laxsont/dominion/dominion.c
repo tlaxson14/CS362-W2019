@@ -643,6 +643,58 @@ int getCost(int cardNumber)
   return -1;
 }
 
+//Refactored adventurer function from switch statement inside cardEffect function
+int adventurer(struct gameState *state, int currentPlayer, int cardDrawn, int drawntreasure, int temphand[], int z)
+{
+	//Continue drawing cards until drawn treasure count equals 2
+	while(drawntreasure < 2)
+	{
+		//Check if empty deck and shuffle cards
+		if(state->deckCount[currentPlayer] < 1)
+		{
+			shuffle(currentPlayer, state);  //if the deck is empty we need to shuffle discard and add to deck
+		}
+		
+		//Draw card and assign top
+		drawCard(currentPlayer, state);
+		cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];  //top card of hand is most recently drawn card.
+
+
+		//Increment drawn treasure 
+		if(cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+		{
+			drawntreasure++;
+		}
+		else
+		{
+			//Remove top card
+			temphand[z] = cardDrawn;
+			state->handCount[currentPlayer]--;  //this should just remove the top card (the most recently drawn one).
+
+			z++;
+		}
+	}
+	
+	//Discard all cards 
+	while(z-1 >= 0)
+	{
+		state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1];   // discard all cards in play that have been drawn
+
+		z=z-1;
+	}
+	return 0;
+}
+
+
+//Refactored smithy function from switch statement inside cardEffect function
+
+
+
+
+
+
+
+
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
   int i;
@@ -667,25 +719,9 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
-      while(drawntreasure<2){
-	if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
-	  shuffle(currentPlayer, state);
-	}
-	drawCard(currentPlayer, state);
-	cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
-	if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
-	  drawntreasure++;
-	else{
-	  temphand[z]=cardDrawn;
-	  state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
-	  z++;
-	}
-      }
-      while(z-1>=0){
-	state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
-	z=z-1;
-      }
-      return 0;
+	cardDrawn = 0;	
+	//Refactored function
+	return adventurer(state, currentPlayer, cardDrawn, drawntreasure, temphand, z);
 			
     case council_room:
       //+4 Cards
