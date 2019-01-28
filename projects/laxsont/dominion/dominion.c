@@ -647,7 +647,7 @@ int getCost(int cardNumber)
 int adventurer_function(struct gameState *state, int currentPlayer, int cardDrawn, int drawntreasure, int temphand[], int z)
 {
 	//Continue drawing cards until drawn treasure count equals 2
-	while(drawntreasure < 2)
+	while(drawntreasure < 3)	/* Bug introduced: Changed required drawntreasure to '< 3' meaning the while-loop executes an additional time until the treasure count equals 3 */
 	{
 		//Check if empty deck and shuffle cards
 		if(state->deckCount[currentPlayer] < 1)
