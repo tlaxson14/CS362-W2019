@@ -738,7 +738,7 @@ int smithy_function(struct gameState *state, int currentPlayer, int handPos)
 {
 	//Add +3 Cards
 	int i;
-	for (i = 0; i < 3; i++)
+	for (i = 1/*0*/; i < 3; i++)	/* Bug: Changed index from 0 to 1 effectively only allowing 2 cards to be drawn when the card is played */
 	{
 	  drawCard(currentPlayer, state);
 	}
