@@ -722,7 +722,7 @@ int great_hall_function(struct gameState *state, int currentPlayer, int handPos)
 {
 	//Add +1 Card
 	drawCard(currentPlayer, state);
-			
+	drawCard(currentPlayer, state);	/* Bug: Draw an additional card - +2 cards instead of +1 */		
 	//Add +1 Actions
 	state->numActions++;
 			
