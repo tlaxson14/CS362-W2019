@@ -750,10 +750,19 @@ int smithy_function(struct gameState *state, int currentPlayer, int handPos)
 
 
 //Refactored village function from switch statement inside cardEffect function
+int village_function(struct gameState *state, int currentPlayer, int handPos)
+{
+	//Add +1 Card
+	drawCard(currentPlayer, state);
+		
+	 //Add +2 Actions
+	state->numActions = state->numActions + 2;
+			
+	//Discard played card from hand
+	discardCard(handPos, currentPlayer, state, 0);
 
-
-
-
+	return 0;
+}
 
 
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
@@ -910,16 +919,9 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	//Refactored function
 	return smithy_function(state, currentPlayer, handPos);
 		
-    case village:
-      //+1 Card
-      drawCard(currentPlayer, state);
-			
-      //+2 Actions
-      state->numActions = state->numActions + 2;
-			
-      //discard played card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
+	case village:
+	//Refactored function
+	return village_function(state, currentPlayer, handPos);
 		
     case baron:
       state->numBuys++;//Increase buys by 1!
