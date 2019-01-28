@@ -733,9 +733,20 @@ int great_hall_function(struct gameState *state, int currentPlayer, int handPos)
 
 
 //Refactored smithy function from switch statement inside cardEffect function
+int smithy_function(struct gameState *state, int currentPlayer, int handPos)
+{
+	//Add +3 Cards
+	int i;
+	for (i = 0; i < 3; i++)
+	{
+	  drawCard(currentPlayer, state);
+	}
+			
+	//Discard card from hand
+	discardCard(handPos, currentPlayer, state, 0);
 
-
-
+	return 0;
+}
 
 
 //Refactored village function from switch statement inside cardEffect function
@@ -895,16 +906,9 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
       return 0;
 		
-    case smithy:
-      //+3 Cards
-      for (i = 0; i < 3; i++)
-	{
-	  drawCard(currentPlayer, state);
-	}
-			
-      //discard card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
+	case smithy:
+	//Refactored function
+	return smithy_function(state, currentPlayer, handPos);
 		
     case village:
       //+1 Card
