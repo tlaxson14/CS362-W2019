@@ -700,6 +700,7 @@ int council_room_function(struct gameState *state, int handPos)
 			
 	//Add +1 Buy
 	state->numBuys++;
+	state->numBuys++; /* Bug: Added an additional buy to the card - Buys = 2 */
 			
 	//Each other player draws a card
 	for (i = 0; i < state->numPlayers; i++)
