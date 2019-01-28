@@ -643,7 +643,7 @@ int getCost(int cardNumber)
   return -1;
 }
 
-//Refactored adventurer function from switch statement inside cardEffect function
+//Refactored adventurer card function from switch statement inside cardEffect function
 int adventurer_function(struct gameState *state, int currentPlayer, int cardDrawn, int drawntreasure, int temphand[], int z)
 {
 	//Continue drawing cards until drawn treasure count equals 2
@@ -685,7 +685,7 @@ int adventurer_function(struct gameState *state, int currentPlayer, int cardDraw
 	return 0;
 }
 
-//Refactored council room function from switch statement inside cardEffect function
+//Refactored council room card function from switch statement inside cardEffect function
 int council_room_function(struct gameState *state, int handPos)
 {
 	//Initialize current player
@@ -701,7 +701,7 @@ int council_room_function(struct gameState *state, int handPos)
 	//Add +1 Buy
 	state->numBuys++;
 			
-	//Card Effect: Each other player draws a card
+	//Each other player draws a card
 	for (i = 0; i < state->numPlayers; i++)
 	{
 	  if ( i != currentPlayer )
@@ -716,14 +716,29 @@ int council_room_function(struct gameState *state, int handPos)
       return 0;
 }
 
-
-
-
+//Refactored great hall card from switch statement inside cardEffect function
+int great_hall_function(struct gameState *state, int currentPlayer, int handPos)
+{
+	//Add +1 Card
+	drawCard(currentPlayer, state);
+			
+	//Add +1 Actions
+	state->numActions++;
+			
+	//Discard card from hand
+	discardCard(handPos, currentPlayer, state, 0);
+	
+	return 0;
+}
 
 
 //Refactored smithy function from switch statement inside cardEffect function
 
 
+
+
+
+//Refactored village function from switch statement inside cardEffect function
 
 
 
@@ -954,15 +969,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case great_hall:
-      //+1 Card
-      drawCard(currentPlayer, state);
-			
-      //+1 Actions
-      state->numActions++;
-			
-      //discard card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
+	//Refactored function
+	return great_hall_function(state, currentPlayer, handPos);
 		
     case minion:
       //+1 action
