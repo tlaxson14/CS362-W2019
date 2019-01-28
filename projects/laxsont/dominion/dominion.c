@@ -644,7 +644,7 @@ int getCost(int cardNumber)
 }
 
 //Refactored adventurer function from switch statement inside cardEffect function
-int adventurer(struct gameState *state, int currentPlayer, int cardDrawn, int drawntreasure, int temphand[], int z)
+int adventurer_function(struct gameState *state, int currentPlayer, int cardDrawn, int drawntreasure, int temphand[], int z)
 {
 	//Continue drawing cards until drawn treasure count equals 2
 	while(drawntreasure < 2)
@@ -685,6 +685,41 @@ int adventurer(struct gameState *state, int currentPlayer, int cardDrawn, int dr
 	return 0;
 }
 
+//Refactored council room function from switch statement inside cardEffect function
+int council_room_function(struct gameState *state, int handPos)
+{
+	//Initialize current player
+	int currentPlayer = whoseTurn(state);
+	
+	//Draw +4 Cards
+	int i;
+	for (i = 0; i < 4; i++)
+	{
+	  drawCard(currentPlayer, state);
+	}
+			
+	//Add +1 Buy
+	state->numBuys++;
+			
+	//Card Effect: Each other player draws a card
+	for (i = 0; i < state->numPlayers; i++)
+	{
+	  if ( i != currentPlayer )
+	  {
+	      drawCard(i, state);
+	  }
+	}
+			
+      //Put played card in played card pile
+      discardCard(handPos, currentPlayer, state, 0);
+			
+      return 0;
+}
+
+
+
+
+
 
 //Refactored smithy function from switch statement inside cardEffect function
 
@@ -721,32 +756,13 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     case adventurer:
 	cardDrawn = 0;	
 	//Refactored function
-	return adventurer(state, currentPlayer, cardDrawn, drawntreasure, temphand, z);
+	return adventurer_function(state, currentPlayer, cardDrawn, drawntreasure, temphand, z);
 			
     case council_room:
-      //+4 Cards
-      for (i = 0; i < 4; i++)
-	{
-	  drawCard(currentPlayer, state);
-	}
-			
-      //+1 Buy
-      state->numBuys++;
-			
-      //Each other player draws a card
-      for (i = 0; i < state->numPlayers; i++)
-	{
-	  if ( i != currentPlayer )
-	    {
-	      drawCard(i, state);
-	    }
-	}
-			
-      //put played card in played card pile
-      discardCard(handPos, currentPlayer, state, 0);
-			
-      return 0;
-			
+	//Rretfactored function
+	return council_room_function(state, handPos);
+	return 0;
+		
     case feast:
       //gain card with cost up to 5
       //Backup hand
