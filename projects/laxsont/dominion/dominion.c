@@ -643,6 +643,129 @@ int getCost(int cardNumber)
   return -1;
 }
 
+//Refactored adventurer card function from switch statement inside cardEffect function
+int adventurer_function(struct gameState *state, int currentPlayer, int cardDrawn, int drawntreasure, int temphand[], int z)
+{
+	//Continue drawing cards until drawn treasure count equals 2
+	while(drawntreasure < 3)	/* Bug introduced: Changed required drawntreasure to '< 3' meaning the while-loop executes an additional time until the treasure count equals 3 */
+	{
+		//Check if empty deck and shuffle cards
+		if(state->deckCount[currentPlayer] < 1)
+		{
+			shuffle(currentPlayer, state);  //if the deck is empty we need to shuffle discard and add to deck
+		}
+		
+		//Draw card and assign top
+		drawCard(currentPlayer, state);
+		cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];  //top card of hand is most recently drawn card.
+
+
+		//Increment drawn treasure 
+		if(cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+		{
+			drawntreasure++;
+		}
+		else
+		{
+			//Remove top card
+			temphand[z] = cardDrawn;
+			state->handCount[currentPlayer]--;  //this should just remove the top card (the most recently drawn one).
+
+			z++;
+		}
+	}
+	
+	//Discard all cards 
+	while(z-1 >= 0)
+	{
+		state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1];   // discard all cards in play that have been drawn
+
+		z=z-1;
+	}
+	return 0;
+}
+
+//Refactored council room card function from switch statement inside cardEffect function
+int council_room_function(struct gameState *state, int handPos)
+{
+	//Initialize current player
+	int currentPlayer = whoseTurn(state);
+	
+	//Draw +4 Cards
+	int i;
+	for (i = 0; i < 4; i++)
+	{
+	  drawCard(currentPlayer, state);
+	}
+			
+	//Add +1 Buy
+	state->numBuys++;
+	state->numBuys++; /* Bug: Added an additional buy to the card - Buys = 2 */
+			
+	//Each other player draws a card
+	for (i = 0; i < state->numPlayers; i++)
+	{
+	  if ( i != currentPlayer )
+	  {
+	      drawCard(i, state);
+	  }
+	}
+			
+      //Put played card in played card pile
+      discardCard(handPos, currentPlayer, state, 0);
+			
+      return 0;
+}
+
+//Refactored great hall card from switch statement inside cardEffect function
+int great_hall_function(struct gameState *state, int currentPlayer, int handPos)
+{
+	//Add +1 Card
+	drawCard(currentPlayer, state);
+	drawCard(currentPlayer, state);	/* Bug: Draw an additional card - +2 cards instead of +1 */		
+	//Add +1 Actions
+	state->numActions++;
+			
+	//Discard card from hand
+	discardCard(handPos, currentPlayer, state, 0);
+	
+	return 0;
+}
+
+
+//Refactored smithy function from switch statement inside cardEffect function
+int smithy_function(struct gameState *state, int currentPlayer, int handPos)
+{
+	//Add +3 Cards
+	int i;
+	for (i = 1/*0*/; i < 3; i++)	/* Bug: Changed index from 0 to 1 effectively only allowing 2 cards to be drawn when the card is played */
+	{
+	  drawCard(currentPlayer, state);
+	}
+			
+	//Discard card from hand
+	discardCard(handPos, currentPlayer, state, 0);
+
+	return 0;
+}
+
+
+//Refactored village function from switch statement inside cardEffect function
+int village_function(struct gameState *state, int currentPlayer, int handPos)
+{
+	//Add +1 Card
+	drawCard(currentPlayer, state);
+		
+	 //Add +2 Actions
+	state->numActions = state->numActions + 2;
+			
+	//Discard played card from hand
+	discardCard(handPos, currentPlayer, state, 0);
+
+	return 0;
+}
+
+
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
   int i;
@@ -667,50 +790,15 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
-      while(drawntreasure<2){
-	if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
-	  shuffle(currentPlayer, state);
-	}
-	drawCard(currentPlayer, state);
-	cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
-	if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
-	  drawntreasure++;
-	else{
-	  temphand[z]=cardDrawn;
-	  state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
-	  z++;
-	}
-      }
-      while(z-1>=0){
-	state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
-	z=z-1;
-      }
-      return 0;
+	cardDrawn = 0;	
+	//Refactored function
+	return adventurer_function(state, currentPlayer, cardDrawn, drawntreasure, temphand, z);
 			
     case council_room:
-      //+4 Cards
-      for (i = 0; i < 4; i++)
-	{
-	  drawCard(currentPlayer, state);
-	}
-			
-      //+1 Buy
-      state->numBuys++;
-			
-      //Each other player draws a card
-      for (i = 0; i < state->numPlayers; i++)
-	{
-	  if ( i != currentPlayer )
-	    {
-	      drawCard(i, state);
-	    }
-	}
-			
-      //put played card in played card pile
-      discardCard(handPos, currentPlayer, state, 0);
-			
-      return 0;
-			
+	//Rretfactored function
+	return council_room_function(state, handPos);
+	return 0;
+		
     case feast:
       //gain card with cost up to 5
       //Backup hand
@@ -828,27 +916,13 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
       return 0;
 		
-    case smithy:
-      //+3 Cards
-      for (i = 0; i < 3; i++)
-	{
-	  drawCard(currentPlayer, state);
-	}
-			
-      //discard card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
+	case smithy:
+	//Refactored function
+	return smithy_function(state, currentPlayer, handPos);
 		
-    case village:
-      //+1 Card
-      drawCard(currentPlayer, state);
-			
-      //+2 Actions
-      state->numActions = state->numActions + 2;
-			
-      //discard played card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
+	case village:
+	//Refactored function
+	return village_function(state, currentPlayer, handPos);
 		
     case baron:
       state->numBuys++;//Increase buys by 1!
@@ -902,15 +976,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case great_hall:
-      //+1 Card
-      drawCard(currentPlayer, state);
-			
-      //+1 Actions
-      state->numActions++;
-			
-      //discard card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
+	//Refactored function
+	return great_hall_function(state, currentPlayer, handPos);
 		
     case minion:
       //+1 action
