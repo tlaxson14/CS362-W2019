@@ -1,0 +1,441 @@
+-----------------
+-  CARD TEST 1  -
+-  SMITHY CARD  -
+-----------------
+
+Smithy in hand.
+
+Card functions correctly!
+Cards added: 3
+
+------------------
+ CARD TEST PASSED 
+------------------
+
+
+-----------------
+-  CARD TEST 2  -
+ ADVENTURER CARD 
+-----------------
+
+Returned value: 0
+Expected value: 0
+Result: PASSED RETURN VALUE TEST
+
+Current hand count: 7
+Expected hand count: 7
+Result: PASSED HAND COUNT TEST
+
+Total coin count: 6
+Expected coin count: 6
+Result: PASSED COIN COUNT TEST
+
+Total card count: 3
+Expected card count: 3
+Result: PASSED CARD COUNT TEST
+
+------------------
+ CARD TEST PASSED 
+------------------
+
+-----------------
+-  CARD TEST 3  -
+  VILLAGE CARD  
+-----------------
+
+Hand count: 5
+Expected hand count: 5
+
+------------------
+ CARD TEST PASSED 
+------------------
+
+-----------------
+-  CARD TEST 4  -
+COUNCIL ROOM CARD 
+-----------------
+
+PLAYER 1
+-----------------
+Card given passed!
+Player 1 has obtained the Council Room card.
+
+Hand count test passed!
+Player 1 hand count: 8
+Player 1 expected hand count: 8
+
+Card count test passed!
+Player 1 card count: 6
+Player 1 expected card count: 6
+
+
+PLAYER 2
+-----------------
+Card given passed!
+Player 2 has obtained the Council Room card.
+
+Hand count test failed!
+Player 2 hand count: 8
+Player 2 expected hand count: 9
+
+Card count test passed!
+Player 2 card count: 7
+Player 2 expected card count: 7
+
+------------------
+ CARD TEST FAILED 
+------------------
+
+-----------------
+-  UNIT TEST 1  -
+-  isGameOver() -
+-----------------
+
+** isGameOver Function Test 1 **
+Game ends when province equals zero.
+Countdown starts at 15.
+
+Test passed! Game not over. Province count = 15
+----------
+Test passed! Game not over. Province count = 14
+----------
+Test passed! Game not over. Province count = 13
+----------
+Test passed! Game not over. Province count = 12
+----------
+Test passed! Game not over. Province count = 11
+----------
+Test passed! Game not over. Province count = 10
+----------
+Test passed! Game not over. Province count = 9
+----------
+Test passed! Game not over. Province count = 8
+----------
+Test passed! Game not over. Province count = 7
+----------
+Test passed! Game not over. Province count = 6
+----------
+Test passed! Game not over. Province count = 5
+----------
+Test passed! Game not over. Province count = 4
+----------
+Test passed! Game not over. Province count = 3
+----------
+Test passed! Game not over. Province count = 2
+----------
+Test passed! Game not over. Province count = 1
+----------
+isGameOver function unit test passed!
+Game over.
+Province count = 0
+----------
+
+** isGameOver Function Test 2 **
+If supplyCount i-th index equals zero for n times then the game is over.
+
+----------
+isGameOver function unit test passed!
+Game continues..
+supplyCount = 2
+
+----------
+isGameOver function unit test failed! Game did not end.
+supplyCount = 3.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 4.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 5.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 6.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 7.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 8.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 9.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 10.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 11.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 12.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 13.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 14.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 15.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 16.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 17.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 18.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 19.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 20.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 21.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 22.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 23.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 24.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 25.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 26.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 27.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 28.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 29.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 30.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 31.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 32.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 33.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 34.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 35.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 36.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 37.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 38.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 39.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 40.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 41.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 42.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 43.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 44.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 45.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 46.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 47.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 48.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 49.
+
+----------
+isGameOver function unit test passed!
+Game over.
+n = 50.
+------------------
+ UNIT TEST FAILED 
+------------------
+
+-----------------
+-  UNIT TEST 2  -
+-  whoseTurn() -
+-----------------
+
+** whoseTurn Function Test 1 **
+Number of players: 4
+Current turn: 2
+Expected turn: 2
+
+------------------
+ UNIT TEST PASSED 
+------------------
+
+-----------------
+-  UNIT TEST 2  -
+-- buyCard() --
+-----------------
+
+** buyCar Function Test 1 **
+	+Tests number of coins
+Test Result: Pass
+State1 coins count: 12
+
+** buyCar Function Test 2 **
+	+Ensures enough coins
+Test Result: Fail
+State1 coins count: 10
+
+** buyCard Function Test 3 **
+	+Ensures enough coins
+	+No buy actions
+Test Result: Pass
+State3 coins count: 15
+
+------------------
+ UNIT TEST FAILED 
+------------------
+
+-----------------
+-  UNIT TEST 4  -
+ fullDeckCount() 
+-----------------
+
+** fullDeckCount Function Test 1 **
+Player 1
+Test Result: Pass
+
+** fullDeckCount Function Test 2 **
+Player 2
+Test Result: Pass
+
+------------------
+ UNIT TEST PASSED 
+------------------
+File 'dominion.c'
+Lines executed:30.35% of 649
+dominion.c:creating 'dominion.c.gcov'
+
