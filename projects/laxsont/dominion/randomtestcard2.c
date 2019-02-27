@@ -22,7 +22,7 @@
 #include "rngs.h"
 
 /* Global constants */
-#define N 500		/* NUMBER OF TESTS */
+#define N 1000		/* NUMBER OF TESTS */
 
 
 /* Function declarations */
@@ -71,13 +71,28 @@ INPUT:
 OUTPUT:
 	N/A
 SOURCES:
-
+	Random algorithm - https://stackoverflow.com/questions/1202687/how-do-i-get-a-specific-range-of-numbers-from-rand
 ********************************************************/
 void randomTestVillageCard()
 {
+	int i, player, numPlayers;
+	int seed;
+	int kingdomCards[10] = {adventurer, council_room, feast, gardens, mine,
+				remodel, smithy, village, baron, great_hall};
+	int testGameState;
+	struct gameState state;
+	struct gameState temp;
 	printf("Inside test village fcn\n");
 
+	/* Run random tests n number of times */
+	for(i=0; i < N; i++){
 
+		/* Initialize random game conditions algorithm */
+		/* Get random number of players between 2-5 */
+		numPlayers = 2 + rand() / (RAND_MAX / (5 - 2 + 1) + 1);
+		printf("Num players = %d\n", numPlayers);
+		assert(numPlayers > 0);		
+	}
 
 
 
