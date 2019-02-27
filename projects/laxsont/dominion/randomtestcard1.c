@@ -78,17 +78,11 @@ SOURCES:
 ********************************************************/
 void randomTestSmithyCard()
 {
-	int i, player;
-	int total = 0, j = 0;
+	int i, player, cardEffectResult, discardCardResult, drawCardResult, deckHandCountResult, cardDraw1, cardDraw2, cardDraw3;
+	int totalFailed = 0, j = 0, failedCardEffect = 0, failedDiscardCard = 0, failedDrawCard = 0, failedDeckHandCount = 0;
 	int kingdomCards[10] = {adventurer, council_room, feast, gardens, mine,
 				remodel, smithy, village, baron, great_hall};
 	struct gameState state;
-	
-
-	int totalFailed = 0;
-	int cardEffectResult, discardCardResult, drawCardResult, deckHandCountResult;
-	int failedCardEffect = 0, failedDiscardCard = 0, failedDrawCard = 0, failedDeckHandCount = 0;
-	int cardDraw1, cardDraw2, cardDraw3;
 	struct gameState temp;
 
 	/* Iterate through N number of random tests */
