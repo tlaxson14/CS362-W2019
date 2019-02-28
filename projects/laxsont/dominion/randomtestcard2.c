@@ -100,11 +100,38 @@ void randomTestVillageCard()
 		/* Init game state */
 		testGameState = initializeGame(numPlayers, kingdomCards, seed, &state);		
 		printf("Gamestate = %d\n", testGameState);
-		assert(testGameState == 0);		 
+		assert(testGameState == 0);		
 
+		/* Assign whose turn */ 
+		state.whoseTurn = player;
 
+		/* Give player village card */
+		state.hand[player][0] = kingdomCards[7];
+		assert(kingdomCards[7] == village);
 
-	}
+		/* Give player random hand count */
+		state.handCount[player] = rand() / (RAND_MAX / (MAX_HAND + 1) + 1);
+		printf("HandCount = %d\n", state.handCount[player]);
+		assert(state.handCount[player] >= 0 && state.handCount[player] <= MAX_HAND);
+		
+		/* Give player random deck count */
+		state.deckCount[player] = rand() / (RAND_MAX / (MAX_DECK + 1) + 1);
+		printf("DeckCount = %d\n", state.deckCount[player]);
+		assert(state.deckCount[player] >= 0 && state.deckCount[player] <= MAX_HAND);
+
+		/* Give player random discard count */
+		state.discardCount[player] = rand() / (RAND_MAX / (MAX_DECK + 1) + 1);
+		printf("discardCount = %d\n", state.discardCount[player]);
+		assert(state.discardCount[player] >= 0 && state.discardCount[player] <= MAX_HAND);
+
+		/* Save game state to temp in order to compare different game states */
+		memcpy(&temp, &state, sizeof(struct gameState));
+
+		/* Play test card */
+		cardEffect(village, 0, 0, 0, &state, 0, 0);
+
+}
+
 
 	
 
