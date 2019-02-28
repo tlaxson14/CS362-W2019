@@ -22,7 +22,7 @@
 #include "rngs.h"
 
 /* Global constants */
-#define N 1000		/* NUMBER OF TESTS */
+#define N 500		/* NUMBER OF TESTS */
 
 
 /* Function declarations */
@@ -110,29 +110,29 @@ void randomTestVillageCard()
 		state.whoseTurn = player;
 
 		/* Assign random number of actions, buys, and coins to player */	
-		state.numActions =  rand() / (RAND_MAX / (6 + 1) + 1);
-		state.coins = rand() / (RAND_MAX / (6 + 1) + 1);
-		state.numBuys = rand() / (RAND_MAX / (6 + 1) + 1);
+		state.numActions =  rand() % 7; /*rand() / (RAND_MAX / (6 + 1) + 1);*/
+		state.coins = rand() % 7; /*rand() / (RAND_MAX / (6 + 1) + 1);*/
+		state.numBuys = rand() % 7; /*/ (RAND_MAX / (6 + 1) + 1);*/
 
 		/* Give player village card */
 		state.hand[player][0] = kingdomCards[7];
 		assert(kingdomCards[7] == village);
 
 		/* Give player random hand count */
-		state.handCount[player] = rand() / (RAND_MAX / (MAX_HAND + 1) + 1);
+		state.handCount[player] = rand() % MAX_HAND;/*rand() / (RAND_MAX / (MAX_HAND + 1) + 1.0);*/
 		printf("HandCount = %d\n", state.handCount[player]);
-		assert(state.handCount[player] >= 0);
+		/*assert(state.handCount[player] >= 0);*/
 		
 		/* Give player random deck count */
-		state.deckCount[player] = rand() / (RAND_MAX / (MAX_DECK + 1) + 1);
+		state.deckCount[player] = rand() % MAX_DECK;/*rand() / (RAND_MAX / (MAX_DECK + 1) + 1);*/
 		printf("DeckCount = %d\n", state.deckCount[player]);
 		assert(state.deckCount[player] >= 0);/* && state.deckCount[player] <= MAX_HAND);*/
 
 		/* Give player random discard count */
-		state.discardCount[player] = rand() / (RAND_MAX / (MAX_DECK + 1) + 1);
+		state.discardCount[player] = rand() % MAX_DECK;/*rand() / (RAND_MAX / (MAX_DECK + 1) + 1);*/
 		printf("discardCount = %d\n", state.discardCount[player]);
 		assert(state.discardCount[player] >= 0);/* && state.discardCount[player] <= MAX_HAND);*/
-
+		
 		/* Save game state to temp in order to compare different game states */
 		memcpy(&temp, &state, sizeof(struct gameState));
 
@@ -193,7 +193,7 @@ void randomTestVillageCard()
 		}
 		
 		/* Print testing results */
-		printf("-- Random Testing Results --\nPASSED TESTS: %d\nFAILED TESTS: %d\n---------------------------\n", passCount, failCount);
+		printf("\n---------------------------\n- Random Testing Results -\nPASSED TESTS: %d\nFAILED TESTS: %d\n---------------------------\n", passCount, failCount);
 		
 	}
 }
