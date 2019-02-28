@@ -75,11 +75,10 @@ SOURCES:
 ********************************************************/
 void randomTestVillageCard()
 {
-	int i, player, numPlayers;
-	int seed;
+	int i, player, numPlayers, testGameState;
+	int seed = 1000;
 	int kingdomCards[10] = {adventurer, council_room, feast, gardens, mine,
 				remodel, smithy, village, baron, great_hall};
-	int testGameState;
 	struct gameState state;
 	struct gameState temp;
 	printf("Inside test village fcn\n");
@@ -88,12 +87,26 @@ void randomTestVillageCard()
 	for(i=0; i < N; i++){
 
 		/* Initialize random game conditions algorithm */
-		/* Get random number of players between 2-5 */
-		numPlayers = 2 + rand() / (RAND_MAX / (5 - 2 + 1) + 1);
+		/* Get random number of players between 2-4 */
+		numPlayers = 2 + rand() / (RAND_MAX / (4 - 2 + 1) + 1);
 		printf("Num players = %d\n", numPlayers);
 		assert(numPlayers > 0);		
+
+		/* Get random player (2-4 from which to run tests */
+		player = 2 + rand() / (RAND_MAX / (4 - 2 + 1) + 1);
+		printf("Player selected = Player %d\n", player);
+		assert(player >= 2 && player <= 4);		
+
+		/* Init game state */
+		testGameState = initializeGame(numPlayers, kingdomCards, seed, &state);		
+		printf("Gamestate = %d\n", testGameState);
+		assert(testGameState == 0);		 
+
+
+
 	}
 
+	
 
 
 }
