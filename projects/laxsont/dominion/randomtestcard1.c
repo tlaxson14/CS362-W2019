@@ -38,10 +38,10 @@ int main()
 	/* Seed random value */
 	srand(time(NULL));
 
+	printf("-----------------\n-  RANDOM TEST  -\n-  SMITHY CARD  -\n-----------------\n");   
+
 	/* TEST: Get start CPU time to execute random tester */
 	startTimer = clock();
-
-	printf("-----------------\n-  RANDOM TEST  -\n-  SMITHY CARD  -\n-----------------\n");   
 	
 	/* Execute Smithy card test N number of times */ 
         randomTestSmithyCard();
