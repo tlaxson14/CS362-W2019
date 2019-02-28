@@ -86,16 +86,18 @@ void randomTestVillageCard()
 
 	/* Run random tests n number of times */
 	for(i=0; i < N; i++){
+		
 		/* Print test number */
-		printf("Test No.%d\n", i+1);
+		printf(" -- Test No.%d --\n", i+1);
+		
 		/* Initialize random game conditions algorithm */
 		/* Get random number of players between 2-4 */
-		numPlayers = 2 + rand() / (RAND_MAX / (4 - 2 + 1) + 1.0);
+		numPlayers = 2 + rand() / (RAND_MAX / (4 - 2 + 1) + 1);
 		printf("Num players = %d\n", numPlayers);
 		assert(numPlayers > 0);		
 
 		/* Get random player (2-4 from which to run tests */
-		player = 2 + rand() / (RAND_MAX / (4 - 2 + 1) + 1.0);
+		player = 2 + rand() / (RAND_MAX / (4 - 2 + 1) + 1);
 		printf("Player selected = Player %d\n", player);
 		assert(player >= 2 && player <= 4);		
 
@@ -108,28 +110,28 @@ void randomTestVillageCard()
 		state.whoseTurn = player;
 
 		/* Assign random number of actions, buys, and coins to player */	
-		state.numActions =  rand() / (RAND_MAX / (6 + 1) + 1.0);
-		state.coins = rand() / (RAND_MAX / (6 + 1) + 1.0);
-		state.numBuys = rand() / (RAND_MAX / (6 + 1) + 1.0);
+		state.numActions =  rand() / (RAND_MAX / (6 + 1) + 1);
+		state.coins = rand() / (RAND_MAX / (6 + 1) + 1);
+		state.numBuys = rand() / (RAND_MAX / (6 + 1) + 1);
 
 		/* Give player village card */
 		state.hand[player][0] = kingdomCards[7];
 		assert(kingdomCards[7] == village);
 
 		/* Give player random hand count */
-		state.handCount[player] = rand() / (RAND_MAX / (MAX_HAND + 1) + 1.0);
+		state.handCount[player] = rand() / (RAND_MAX / (MAX_HAND + 1) + 1);
 		printf("HandCount = %d\n", state.handCount[player]);
-		assert(state.handCount[player] >= 0 && state.handCount[player] <= MAX_HAND);
+		assert(state.handCount[player] >= 0);
 		
 		/* Give player random deck count */
-		state.deckCount[player] = rand() / (RAND_MAX / (MAX_DECK + 1) + 1.0);
+		state.deckCount[player] = rand() / (RAND_MAX / (MAX_DECK + 1) + 1);
 		printf("DeckCount = %d\n", state.deckCount[player]);
-		assert(state.deckCount[player] >= 0 && state.deckCount[player] <= MAX_HAND);
+		assert(state.deckCount[player] >= 0);/* && state.deckCount[player] <= MAX_HAND);*/
 
 		/* Give player random discard count */
-		state.discardCount[player] = rand() / (RAND_MAX / (MAX_DECK + 1) + 1.0);
+		state.discardCount[player] = rand() / (RAND_MAX / (MAX_DECK + 1) + 1);
 		printf("discardCount = %d\n", state.discardCount[player]);
-		assert(state.discardCount[player] >= 0 && state.discardCount[player] <= MAX_HAND);
+		assert(state.discardCount[player] >= 0);/* && state.discardCount[player] <= MAX_HAND);*/
 
 		/* Save game state to temp in order to compare different game states */
 		memcpy(&temp, &state, sizeof(struct gameState));
@@ -157,14 +159,41 @@ void randomTestVillageCard()
 			handCountResult = true;
 		}
 		else{
+			printf("Test result: Hand count test FAILED! State: %d - Temp: %d\n", state.handCount[player], temp.handCount[player]);
 			failCount++;
 			handCountResult = false;
 		}
 
-}
-
-
-	
-
-
+		/* Assert and validate deck count of player */
+		/*assert(state.deckCount[player] == temp.deckCount[player]-1);
+		*/
+		if(state.deckCount[player] == temp.deckCount[player]-1){
+			printf("Test result: Deck count test PASSED! State: %d - Temp: %d\n", state.deckCount[player], temp.deckCount[player]);
+			passCount++;
+			deckCountResult = true;
+		}
+		else{
+			printf("Test result: Deck count test FAILED! State: %d - Temp: %d\n", state.deckCount[player], temp.deckCount[player]);
+			failCount++;
+			deckCountResult = false;
+		}
+		
+		/* Assert and validate discard count of player */
+/*		assert(state.discardCount[player] == temp.discardCount[player]);
+*/
+		if(state.discardCount[player] == temp.discardCount[player]){
+			printf("Test result: Deck count test PASSED! State: %d - Temp: %d\n", state.discardCount[player], temp.discardCount[player]);
+			passCount++;
+			discardCountResult = true;
+		}
+		else{
+			printf("Test result: Deck count test FAILED! State: %d - Temp: %d\n", state.discardCount[player], temp.discardCount[player]);
+			failCount++;
+			discardCountResult = false;
+		}
+		
+		/* Print testing results */
+		printf("-- Random Testing Results --\nPASSED TESTS: %d\nFAILED TESTS: %d\n---------------------------\n", passCount, failCount);
+		
+	}
 }
