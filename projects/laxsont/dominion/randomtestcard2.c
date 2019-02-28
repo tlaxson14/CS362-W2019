@@ -75,25 +75,27 @@ SOURCES:
 ********************************************************/
 void randomTestVillageCard()
 {
+	bool numActionsResult, handCountResult, deckCountResult, discardCountResult;
 	int i, player, numPlayers, testGameState;
 	int seed = 1000;
+	int failCount = 0, passCount = 0;
 	int kingdomCards[10] = {adventurer, council_room, feast, gardens, mine,
 				remodel, smithy, village, baron, great_hall};
 	struct gameState state;
 	struct gameState temp;
-	printf("Inside test village fcn\n");
 
 	/* Run random tests n number of times */
 	for(i=0; i < N; i++){
-
+		/* Print test number */
+		printf("Test No.%d\n", i+1);
 		/* Initialize random game conditions algorithm */
 		/* Get random number of players between 2-4 */
-		numPlayers = 2 + rand() / (RAND_MAX / (4 - 2 + 1) + 1);
+		numPlayers = 2 + rand() / (RAND_MAX / (4 - 2 + 1) + 1.0);
 		printf("Num players = %d\n", numPlayers);
 		assert(numPlayers > 0);		
 
 		/* Get random player (2-4 from which to run tests */
-		player = 2 + rand() / (RAND_MAX / (4 - 2 + 1) + 1);
+		player = 2 + rand() / (RAND_MAX / (4 - 2 + 1) + 1.0);
 		printf("Player selected = Player %d\n", player);
 		assert(player >= 2 && player <= 4);		
 
@@ -105,22 +107,27 @@ void randomTestVillageCard()
 		/* Assign whose turn */ 
 		state.whoseTurn = player;
 
+		/* Assign random number of actions, buys, and coins to player */	
+		state.numActions =  rand() / (RAND_MAX / (6 + 1) + 1.0);
+		state.coins = rand() / (RAND_MAX / (6 + 1) + 1.0);
+		state.numBuys = rand() / (RAND_MAX / (6 + 1) + 1.0);
+
 		/* Give player village card */
 		state.hand[player][0] = kingdomCards[7];
 		assert(kingdomCards[7] == village);
 
 		/* Give player random hand count */
-		state.handCount[player] = rand() / (RAND_MAX / (MAX_HAND + 1) + 1);
+		state.handCount[player] = rand() / (RAND_MAX / (MAX_HAND + 1) + 1.0);
 		printf("HandCount = %d\n", state.handCount[player]);
 		assert(state.handCount[player] >= 0 && state.handCount[player] <= MAX_HAND);
 		
 		/* Give player random deck count */
-		state.deckCount[player] = rand() / (RAND_MAX / (MAX_DECK + 1) + 1);
+		state.deckCount[player] = rand() / (RAND_MAX / (MAX_DECK + 1) + 1.0);
 		printf("DeckCount = %d\n", state.deckCount[player]);
 		assert(state.deckCount[player] >= 0 && state.deckCount[player] <= MAX_HAND);
 
 		/* Give player random discard count */
-		state.discardCount[player] = rand() / (RAND_MAX / (MAX_DECK + 1) + 1);
+		state.discardCount[player] = rand() / (RAND_MAX / (MAX_DECK + 1) + 1.0);
 		printf("discardCount = %d\n", state.discardCount[player]);
 		assert(state.discardCount[player] >= 0 && state.discardCount[player] <= MAX_HAND);
 
@@ -129,6 +136,30 @@ void randomTestVillageCard()
 
 		/* Play test card */
 		cardEffect(village, 0, 0, 0, &state, 0, 0);
+
+		/* Assert and validate number of actions between game states */		
+		assert(state.numActions == temp.numActions + 2);
+		if(state.numActions == temp.numActions + 2){
+			printf("Test result: Number of actions PASSED! State: %d - Temp: %d\n", state.numActions, temp.numActions+2);
+			passCount++;
+			numActionsResult = true;
+		}
+		else{
+			failCount++;
+			numActionsResult = false;
+		}
+		
+		/* Assert and validate hand count of player */
+		assert(state.handCount[player] == temp.handCount[player]);
+		if(state.handCount[player] == temp.handCount[player]){
+			printf("Test result: Hand count test PASSED! State: %d - Temp: %d\n", state.handCount[player], temp.handCount[player]);
+			passCount++;
+			handCountResult = true;
+		}
+		else{
+			failCount++;
+			handCountResult = false;
+		}
 
 }
 
